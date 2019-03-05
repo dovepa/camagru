@@ -1,0 +1,31 @@
+@mixin transform ($transform){
+	-ms-transform: $transform;
+	-o-transform: $transform;
+	-webkit-transform: $transform;
+	-moz-transform: $transform;
+	transform : $transform;
+}
+
+@mixin filter ($filter){
+	-webkit-filter: $filter;
+	filter: $filter;
+}
+
+@mixin transition ($trans){
+	-webkit-transition: $trans;
+	transition: $trans;
+}
+
+@mixin triangle ($size : 20px, $tcolor : white,){
+	&::after {
+		content: "";
+		width:0px;
+		height:0px;
+		border-left: $size solid transparent;
+		border-right: $size  solid transparent;
+		border-top: $size  solid $tcolor;
+		position: absolute;
+		bottom: $size * -1;
+		left: calc(50% - #{$size});
+	}
+}
