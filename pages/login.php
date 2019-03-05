@@ -9,10 +9,11 @@
 		}
 	}
 	use \App\HTML\Form;
+	App\Table\Msg::msg();
 ?>
 
 <div class="logindiv">
-	<img src="../pages/css/img/logo.png" class="logoimg">
+	<img src="pages/css/img/logo.png" class="logoimg">
 	<div class="linediv"></div><h3> Login </h3><div class="linediv"></div>
 	<?php
 			$form1 = new Form();
@@ -27,7 +28,7 @@
 
 </div>
 
-
+<?php echo '
 <div class="flex-container">
 
 <?php foreach (App\Table\Img::getLog() as $img): ?>
@@ -36,3 +37,4 @@
 </div>
 <?php endforeach; ?>
 </div>
+';?>'

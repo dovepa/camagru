@@ -1,21 +1,4 @@
 <?php
-	$to      = 'dove-dove@live.fr';
-	$subject = 'the subject';
-	$message = 'hello';
-	$headers = array(
-		'From' => 'dove.dove@free.fr',
-		'Reply-To' => 'dove.dove@free.fr',
-		'X-Mailer' => 'PHP/' . phpversion()
-	);
-	if (mail($to, $subject, $message, $headers))
-	{
-		echo "ok";
-	}
-	else
-	{
-		echo "ko";
-	}
-die();
 	if (!empty($_POST)){
 		$auth = new App\Auth\dbAuth(App\Data::getDb());
 		if ($auth->regist($_POST['Username'], $_POST['Mail'], $_POST['Password'], $_POST['Password Check']) === true){
@@ -29,7 +12,7 @@ App\Table\Msg::msg();
 ?>
 
 <div class="logindiv">
-	<img src="../public/css/img/logo.png" class="logoimg">
+	<img src="pages/css/img/logo.png" class="logoimg">
 	<div class="linediv"></div><h3> Login </h3><div class="linediv"></div>
 	<?php
 			$form1 = new Form();

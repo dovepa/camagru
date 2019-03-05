@@ -1,5 +1,9 @@
 <?php
 
+// edit bitnami.conf and add :
+// DocumentRoot "/Users/dpalombo/http/camagru"
+// <Directory "/Users/dpalombo/http/camagru">
+
 include "database.php";
 
 try {
