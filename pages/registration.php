@@ -9,11 +9,12 @@
 ?>
 <?php
 App\Table\Msg::msg();
+App\Table\Mail::mail();
 ?>
 
 <div class="logindiv">
 	<img src="pages/css/img/logo.png" class="logoimg">
-	<div class="linediv"></div><h3> Login </h3><div class="linediv"></div>
+	<div class="linediv"></div><h3> Registration </h3><div class="linediv"></div>
 	<?php
 			$form1 = new Form();
 				echo $form1->input('Username');

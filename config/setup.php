@@ -3,6 +3,7 @@
 // edit bitnami.conf and add :
 // DocumentRoot "/Users/dpalombo/http/camagru"
 // <Directory "/Users/dpalombo/http/camagru">
+// for sent mail uncomment sendmail_path = "env -i /usr/sbin/sendmail -t -i" in php.ini
 
 include "database.php";
 
