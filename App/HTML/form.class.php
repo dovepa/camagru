@@ -22,6 +22,21 @@ class Form{
 	{
 		return ($this->surround($input_txt.' :').$this->surround('<input type="'.$this->type.'" name="'.$input_txt.'" class="'.$this->class.'">'));
 	}
+	public function toggle($checked, $name = 'onoffswitch')
+	{
+		if ($checked === true){
+			$checked = "checked";
+		}else{
+			$checked = '';
+		}
+		return ('<div class="onoffswitch">
+		<input type="checkbox" name="'.$name.'" class="onoffswitch-checkbox" id="myonoffswitch" '.$checked.'>
+		<label class="onoffswitch-label" for="myonoffswitch">
+			<span class="onoffswitch-inner"></span>
+			<span class="onoffswitch-switch"></span>
+		</label>
+	</div>');
+	}
 
 	public function area($input_txt, $rows, $cols, $defval)
 	{

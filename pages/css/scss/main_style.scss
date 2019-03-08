@@ -1,10 +1,11 @@
 @import '_mixins.scss';
 @import '_colors.scss';
-
+@import 'toggle.scss';
 body{
 	background-color: $body_color;
 	margin: 0;
 	padding: 0;
+	min-width: 500px;
 }
 
 %boxshadow{
@@ -14,13 +15,6 @@ body{
 %centerdiv{
 	margin-right: auto;
 	margin-left: auto;
-}
-
-#content .hidden{
-    display: none;
-}
-#content #loader{
-    display: none;
 }
 
 .footer {
@@ -79,34 +73,69 @@ body{
 	margin: 1em;
 }
 
-.item {
+.imgrp{
 	margin: 1em;
 	padding: 0.5em;
 	width: 110px;
 	min-width: 0;
-  }
-
-.imgrp{
-	@extend .item;
-	flex: 5;
-	justify-content: center;
+	color: white;
+	font-family: monospace;
+ 	 flex : 5;
 }
 
 .menuitem {
-	@extend .item;
-	flex: auto;
+	margin: 1em;
+	padding: 0.5em;
+	width: 110px;
+	min-width: 0;
+	color: white;
+	font-family: monospace;
+ 	flex : auto;
 }
 
 .menu {
-	background-color: $backcolormenu;
 	height: auto;
 	position: absolute;
 	z-index: 26;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	border : 5px;
+	border-color: white;
+	border-style: $instaon;
+
+  }
+  ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	margin: 25px;
   }
 
+  li {
+	float: left;
+  }
+
+  li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 16px;
+	background-color: $backcolormenu;
+	text-decoration: none;
+  }
+
+  li a:hover {
+	background-color: $instaok;
+  }
+
+
 .img{
-  width: 100%;
-  height: auto;
+	width : auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
 }
 
 .hide{
@@ -126,11 +155,22 @@ body{
 	text-align: center;
 	margin-bottom: 1em;
 	max-width: 800px;
-	padding: 0.5em;
+	padding: 30px;
 	background-color: $backcolorimg;
 	z-index: 24;
 
 }
+
+.editlst{
+	@extend %centerdiv;
+	margin-bottom: 1em;
+	max-width: 800px;
+	padding: 30px;
+	background-color: $backcolorimg;
+	z-index: 24;
+
+}
+
 .flex-container {
 	overflow: hidden;
 	display: flex;

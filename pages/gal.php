@@ -2,20 +2,22 @@
 App\Table\Msg::msg();
 ?>
 
-<h1>Gal User</h1>
-
+<h1><?php $user = App\Table\Img::getGalusername(); echo ucfirst(strtolower($user->username));?>'s Gallery
+</h1>
 
 <div class="all">
 <div class="imgrp">
-<?php foreach (App\Table\Img::getGal() as $img): ?>
+<?php foreach (App\Table\Img::getGal(0,$_GET['id']) as $img): ?>
 
-<div class="imglist">
-<?= $img->getImg(); ?>
-</div>
+<?= $img->getImggal(); ?>
 <?php endforeach; ?>
 </div>
+<script>
+ var id="<?php echo $_GET['id']; ?>";
+scrollgal(id);</script>
 <div class="menuitem">
 <div class="menu">
-<p >le menu est ici</p></div>
+<?php App\HTML\Menu::menu(); ?>
+</div>
 </div>
 </div>

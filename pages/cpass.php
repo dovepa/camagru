@@ -1,10 +1,11 @@
 <?php
-	if ($_POST['submit'] === 'Registration'){
-		if (!empty($_POST['Username']) && !empty($_POST['Mail']) && !empty($_POST['Password']) && !empty($_POST['Password_Check'])){
+echo $_GET['user']."      ".$_GET['token'];
+	if ($_POST['submit'] === 'Submit'){
+		if (!empty($_GET['user']) && !empty($_GET['token']) && !empty($_POST['Password']) && !empty($_POST['Password_Check'])){
 			$auth = new App\Auth\dbAuth(App\Data::getDb());
-			if ($auth->regist($_POST['Username'], $_POST['Mail'], $_POST['Password'], $_POST['Password_Check']) === true){
+			if ($auth->cpass($_GET['user'],$_GET['token'], $_POST['Password'], $_POST['Password_Check']) === true){
 				header('Location: index.php?p=login');
-				$_SESSION['msg'][] = "Confirm your email";
+				$_SESSION['msg'][] = "Password Canged sucesfully";
 				exit;
 			}
 		}else{
@@ -20,15 +21,13 @@ App\Table\Msg::msg();
 
 <div class="logindiv">
 	<img src="pages/css/img/logo.png" class="logoimg">
-	<div class="linediv"></div><h3> Registration </h3><div class="linediv"></div>
+	<div class="linediv"></div><h3> Change Password </h3><div class="linediv"></div>
 	<?php
 			$form1 = new Form();
-				echo $form1->input('Username');
-				echo $form1->input('Mail');
 				$form1->type = "password";
 				echo $form1->input('Password');
 				echo $form1->input('Password_Check');
-				echo $form1->submit("Registration");
+				echo $form1->submit("Submit");
 				unset($form1);
 	?>
 	<p></p><p>You will receive a confirmation email</p>

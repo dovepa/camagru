@@ -7,7 +7,7 @@ class Mail{
 	private $imgid;
 
 
-	public static function mail($mail_to = "dove-dove@hotmail.fr", $mail_subject = "Test", $mail_message = "Hello dove")
+	public static function mail($mail_to, $mail_message = "Test", $mail_subject = "CAMAGRU")
 	{
 		$from_name = "Camagru";
 		$from_mail = "camagru@project42.fr";

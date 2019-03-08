@@ -75,6 +75,7 @@ class Database{
 		}
 		return $datas;
 	}
+
 }
 
 ?>

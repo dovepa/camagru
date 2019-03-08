@@ -1,7 +1,7 @@
 <?php
 App\Table\Msg::msg();
 ?>
-<h1>IMG</h1>
+<h1><?php $user = App\Table\Img::getGalusername(); echo ucfirst(strtolower($user->username));?>'s Picture </h1>
 
 <div class="all">
 <div class="imgrp">
@@ -13,6 +13,6 @@ App\Table\Msg::msg();
 </div>
 <div class="menuitem">
 <div class="menu">
-<p >le menu est ici</p></div>
+<?php App\HTML\Menu::menu(); ?>
 </div>
 </div>
