@@ -13,6 +13,43 @@ class dbAuth{
 		$this->db = $db;
 	}
 
+	private function checkPassword($pwd) {
+		if (strlen($pwd) < 8) {
+			$_SESSION['msg'][] = "Password too short, min 8!";
+			return false;
+		}
+		if (strlen($pwd) > 32) {
+			$_SESSION['msg'][] = "Password too long, max32!";
+			return false;
+		}
+		if (!preg_match('/[0-9]+/', $pwd)) {
+			$_SESSION['msg'][] = "Password must include at least one number!";
+			return false;
+		}
+		if (!preg_match('/[a-zA-Z]+/', $pwd)) {
+			$_SESSION['msg'][] = "Password must include at least one letter!";
+			return false;
+		}
+		return (true);
+	}
+
+	private function checkInput($input, $name) {
+		if (strlen($input) < 8) {
+			$_SESSION['msg'][] = $name." too short, min 8!";
+			return false;
+		}
+		if (strlen($input) > 32) {
+			$_SESSION['msg'][] = $name." too long, max32!";
+			return false;
+		}
+		if (!preg_match('/^[a-zA-Z0-9]+$/', $input))
+		{
+			$_SESSION['msg'][] = $name." must use only letter ane numbers !";
+			return false;
+		}
+		return (true);
+	}
+
 	public function vmail($id, $token){
 		$user = Data::getDb()->prepare("SELECT * FROM users WHERE id = ? AND token = ?", [$id, $token], null, true);
 		if ($user->verified === 1){
@@ -27,6 +64,8 @@ class dbAuth{
 	}
 
 	public function cpass($id, $token, $p1, $p2){
+		if ($this->checkPassword($p1) === false)
+			return;
 		$user = Data::getDb()->prepare("SELECT * FROM users WHERE id = ? AND token = ?", [$id, $token], null, true);
 		if ($user->verified !== 1){
 			Data::getDb()->insert("UPDATE `users` SET `verified` = '1' WHERE `users`.`id` = ?;", [$id]);
@@ -53,6 +92,7 @@ class dbAuth{
 	}
 
 	public function faccount($username){
+		$username = ucfirst(strtolower($username));
 		$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$username], null, true);
 			if ($user){
 				$bytes = random_bytes(20);
@@ -63,7 +103,6 @@ class dbAuth{
 				$mailcontent = "Hello ".$user->username."\n,
 								for change your password go to :\n
 								<a href='".$link."'>".$link."</a>";
-				echo $mailcontent;
 				Mail::mail($user->mail,$mailcontent);
 				return $_SESSION['msg'][] = "Check your mail";
 			}
@@ -74,9 +113,9 @@ class dbAuth{
 	}
 
 	public function setting($nusername, $nmail, $oldpasswd, $npasswd, $npasswdc, $switch){
-	// $_POST['New Username'], $_POST['New Mail'], $_POST['Old Password'], $_POST['New Password'], $_POST['New Password Confirm'], $switch
 		if ($nusername)
 		{
+			$nusername = ucfirst(strtolower($nusername));
 			$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$nusername], null, true);
 			if ($user){
 				return $_SESSION['msg'][] = "Username exist, choose another";
@@ -111,7 +150,7 @@ class dbAuth{
 		}
 		if ($oldpasswd || $npasswd || $npasswdc){
 			if ($oldpasswd && $npasswd && $npasswdc){
-				if ($npasswd != $npasswdc){
+				if (($npasswd != $npasswdc) || ($this->checkPassword($npasswd) === false)){
 					return $_SESSION['msg'][] = "Password are not same";
 				}
 				$oldpasswd = hash('whirlpool', $oldpasswd);
@@ -140,13 +179,12 @@ class dbAuth{
 	public function regist($username, $mail, $p1, $p2){
 		if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
 			if ($p1 === $p2){
-				if (strlen($p1) < 5)
-				{
-					return $_SESSION['msg'][] = "Password to short min 5char";
-				}
+				if ($this->checkPassword($p1) === false)
+					return ;
 				if (!empty($username)){
-					if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['newlogin'])){
-						return $_SESSION['msg']['c'][] = "Use Only leter an numbers in username";
+					$username = ucfirst(strtolower($username));
+					if (($this->checkInput($username, 'Username') === false)){
+						return;
 					}else{
 						$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$username], null, true);
 						if ($user){
@@ -188,6 +226,7 @@ class dbAuth{
 	}
 
 	public function login($username, $password){
+		$username = ucfirst(strtolower($username));
 		$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$username], null, true);
 		if ($user){
 
