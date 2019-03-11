@@ -1,5 +1,4 @@
 <?php
-echo $_GET['user']."      ".$_GET['token'];
 	if ($_POST['submit'] === 'Submit'){
 		if (!empty($_GET['user']) && !empty($_GET['token']) && !empty($_POST['Password']) && !empty($_POST['Password_Check'])){
 			$auth = new App\Auth\dbAuth(App\Data::getDb());
@@ -9,7 +8,7 @@ echo $_GET['user']."      ".$_GET['token'];
 				exit;
 			}
 		}else{
-			$_SESSION['msg'][] = "Empty form";
+			$_SESSION['msg'][] = "Empty form Error";
 		}
 
 	}

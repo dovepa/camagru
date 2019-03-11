@@ -80,12 +80,15 @@ else {
  else if ($p === 'gal')
  {
 	if (!($auth->logged())){
-		require "pages/login.php";
+		if (!empty($_GET['img']))
+			require "pages/nlimg.php";
+		else
+			require "pages/login.php";
 	}
 	else {
-	 if (isset($_GET['img']))
+	 if (!empty($_GET['img']))
 		require "pages/img.php";
-	 else if (isset($_GET['id']))
+	 else if (!empty($_GET['id']))
 		 require "pages/gal.php";
 	 else {
 		$_GET['id'] = $auth->logged();
@@ -109,7 +112,7 @@ else if ($p === 'vmail')
 {
    if (!empty($_GET['user']) && !empty($_GET['token'])){
 		if ($auth->vmail($_GET['user'], $_GET['token'])){
-			header('Location: index.php?p=home');
+			header('Location: index.php?p=login');
 			$_SESSION['msg'][] = 'Account succefully activated';
 			exit;
 		}else {

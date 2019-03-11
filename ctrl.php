@@ -84,6 +84,26 @@ else if ($p === "loader3"){
 		echo $img->getImggal();
 	}
 }
+else if ($p === "likes"){
+	$data = Data::getDb()->prepare("SELECT * FROM `like` WHERE `imgid` = ? AND `userid` = ?", [$_POST['img'], $_SESSION['auth']['id']], null, true);
+	if ($data->likeval === 1){
+		Data::getDb()->insert("UPDATE `like` SET `likeval` = '2' WHERE `like`.`id` = ?;", [$data->id]);
+	}else if ($data->likeval === 2){
+		Data::getDb()->insert("UPDATE `like` SET `likeval` = '1' WHERE `like`.`id` = ?;", [$data->id]);
+	}else{
+		Data::getDb()->insert("INSERT INTO `like` (`id`, `userid`, `imgid`, `likeval`) VALUES (NULL, ?, ?, ?);", [$_SESSION['auth']['id'], $_POST['img'], 1]);
+	}
+	if (isset($_POST['img'])){
+		$landc = new App\Table\Landc($_POST['img']);
+		echo $landc->getLikes();
+	}
+}
+else if ($p === "com"){
+	if (isset($_GET['id'])){
+		$landc = new App\Table\Landc($_GET['id']);
+		echo $img->getImggal();
+	}
+}
 else{
 	header('Location: index.php?p=home');
 }

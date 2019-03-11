@@ -7,10 +7,15 @@ App\Table\Msg::msg();
 
 <div class="all">
 <div class="imgrp">
-<?php foreach (App\Table\Img::getGal(0,$_GET['id']) as $img): ?>
-
+<?php
+$i = 0;
+foreach (App\Table\Img::getGal(0,$_GET['id']) as $img): ?>
+<?php $i++; ?>
 <?= $img->getImggal(); ?>
 <?php endforeach; ?>
+<?php
+if ($i === 0)
+	echo '<h1>Your Gallery Is empty</h1>';?>
 </div>
 <script>
  var id="<?php echo $_GET['id']; ?>";

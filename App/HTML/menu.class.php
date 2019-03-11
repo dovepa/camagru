@@ -12,5 +12,11 @@ class Menu{
 		<li><a href="index.php?p=logout">Logout</a></li>
 		</ul>';
 	}
+	public static function menunl(){
+		echo '<ul>
+			<li><a href="index.php?p=login">Login</a></li></ul><ul>
+			<li><a href="index.php?p=registration">Create Account</a></li></ul><ul>
+			</ul>';
+		}
 
 }

@@ -93,3 +93,17 @@ function scrollh(){
         alert('operation canceled');
       };
     }
+
+    function likes(id) {
+      $.ajax({
+        url : "ctrl.php?p=likes",
+        type : "POST",
+        data: 'img=' + id,
+        dataType : 'html',
+        success: function(html){
+          if (html){
+            $("."+ id +"likes").html(html);
+      }
+    }
+  });
+ }

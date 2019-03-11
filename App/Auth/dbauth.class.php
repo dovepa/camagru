@@ -13,6 +13,7 @@ class dbAuth{
 		$this->db = $db;
 	}
 
+
 	private function checkPassword($pwd) {
 		if (strlen($pwd) < 8) {
 			$_SESSION['msg'][] = "Password too short, min 8!";
@@ -34,8 +35,8 @@ class dbAuth{
 	}
 
 	private function checkInput($input, $name) {
-		if (strlen($input) < 8) {
-			$_SESSION['msg'][] = $name." too short, min 8!";
+		if (strlen($input) < 3) {
+			$_SESSION['msg'][] = $name." too short, min 3 letter!";
 			return false;
 		}
 		if (strlen($input) > 32) {
@@ -44,10 +45,32 @@ class dbAuth{
 		}
 		if (!preg_match('/^[a-zA-Z0-9]+$/', $input))
 		{
-			$_SESSION['msg'][] = $name." must use only letter ane numbers !";
+			$_SESSION['msg'][] = $name." must use only letter and numbers !";
 			return false;
 		}
 		return (true);
+	}
+
+	public function comment($com, $imgid){
+		if (!preg_match('/^[a-zA-Z0-9 .\/*-+@]+$/', $com))
+		{
+			$_SESSION['msg'][] = $name." must use only letter and numbers !";
+			return false;
+		}
+		Data::getDb()->insert("INSERT INTO `comment` (`id`, `userid`, `imgid`, `comment`) VALUES (NULL, ?, ?, ?);", [$_SESSION['auth']['id'],$imgid,$com]);
+		$user = Data::getDb()->prepare("SELECT users.username, users.mailcom, users.mail, users.id
+											FROM users, img
+											WHERE  users.id = img.userid
+											AND img.id = ?", [$imgid], null, true);
+		if ($user->mailcom === 1){
+		$link = "http://localhost:8080/index.php?p=gal&id=".$user->id."&img=".$imgid;
+		$mailcontent = "Hello ".$user->username."\n,
+						You have a new comment on your photo to see it go to:\n
+						<a href='".$link."'>".$link."</a>";
+		//echo $mailcontent;
+		Mail::mail($user->mail,$mailcontent);
+	}
+		return true;
 	}
 
 	public function vmail($id, $token){
@@ -58,6 +81,7 @@ class dbAuth{
 		}
 		if ($user){
 			Data::getDb()->insert("UPDATE `users` SET `verified` = '1' WHERE `users`.`id` = ?;", [$id]);
+			Data::getDb()->insert("UPDATE `users` SET `token` = '' WHERE `users`.`id` = ?;", [$id]);
 			return true;
 		}
 		return false;
@@ -78,6 +102,7 @@ class dbAuth{
 				$p1 = hash('whirlpool', $p1);
 				Data::getDb()->insert("UPDATE `users` SET `passwd` =  ?
 											WHERE `users`.`id` = ?;", [$p1, $id]);
+				Data::getDb()->insert("UPDATE `users` SET `token` = '' WHERE `users`.`id` = ?;", [$id]);
 				return true;
 			}
 			else{
@@ -103,6 +128,7 @@ class dbAuth{
 				$mailcontent = "Hello ".$user->username."\n,
 								for change your password go to :\n
 								<a href='".$link."'>".$link."</a>";
+				echo $mailcontent;
 				Mail::mail($user->mail,$mailcontent);
 				return $_SESSION['msg'][] = "Check your mail";
 			}
@@ -119,6 +145,9 @@ class dbAuth{
 			$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$nusername], null, true);
 			if ($user){
 				return $_SESSION['msg'][] = "Username exist, choose another";
+			}
+			else if (($this->checkInput($nusername, 'Username') === false)){
+				return;
 			}
 			else{
 				Data::getDb()->insert("UPDATE `users` SET `username` = ?
@@ -143,10 +172,11 @@ class dbAuth{
 				return $_SESSION['msg'][] = "Bad Mail format";
 			}
 		}
-		if ($switch){
+		if ($switch !== $_SESSION['auth']['mailcom']){
 				Data::getDb()->insert("UPDATE `users` SET `mailcom` = ?
 				 WHERE `users`.`id` = ?;", [$switch, $_SESSION['auth']['id']]);
 				 $_SESSION['auth']['mailcom'] = $switch;
+				 $_SESSION['msg'][] = "Comments Mail set";
 		}
 		if ($oldpasswd || $npasswd || $npasswdc){
 			if ($oldpasswd && $npasswd && $npasswdc){
@@ -206,6 +236,7 @@ class dbAuth{
 								$mailcontent = "Hello ".$user->username."\n,
 												for activate your account go to :\n
 												<a href='".$link."'>".$link."</a>";
+								echo $mailcontent;
 								Mail::mail($user->mail, $mailcontent);
 								return true;
 							}

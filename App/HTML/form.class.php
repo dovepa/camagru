@@ -38,10 +38,9 @@ class Form{
 	</div>');
 	}
 
-	public function area($input_txt, $rows, $cols, $defval)
+	public function area($input_txt, $rows = 2)
 	{
-		return ($this->surround($input_txt.' :').$this->surround('<textarea rows="'.$rows.'" type="'.$this->type.'" class="'.$this->class.'" cols="'.$cols.'" name="'.$input_txt.'">
-		'.$defval.'</textarea>'));
+		return ($this->surround($input_txt.' :').$this->surround('<textarea maxlength="230" rows="'.$rows.'" class="'.$this->class.'" name="'.$input_txt.'"></textarea>'));
 	}
 
 	public function submit($submit_txt){
