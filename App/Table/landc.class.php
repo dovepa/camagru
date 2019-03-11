@@ -64,8 +64,12 @@ class Landc{
 		$i = count($data);
 		foreach ($data as $val)
 		{
-			echo '<div class="com"><p>N'.$i.'- Posted by : <a href="index.php?p=gal&id='. $val->userid . '">' . $val->username . '</a></p>
-			<p>'.$val->comment.'</p></div>';
+			$user = Data::getDb()->prepare("SELECT img.userid FROM img WHERE id = ?", [$val->imgid], null, true);
+			if ($val->userid === $_SESSION['auth']['id'] || $user->userid === $_SESSION['auth']['id']){
+				$remove = '<button id="'. $val->id . '" class="submit_fields" onclick="removecom(this.id); return false"">Remove</button>';
+			}
+			echo '<div class="com" id="'.$val->id.'com"><p>N'.$i.'- Posted by : <a href="index.php?p=gal&id='. $val->userid . '">' . $val->username . '</a></p>
+			<p>'.$val->comment.'</p><p>'.$remove.'</p></div>';
 			$i--;
 		}
 		return;

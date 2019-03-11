@@ -34,6 +34,22 @@ if ($p === 'remove'){
 			}
 			else
 				echo "Error";
+} else if ($p === 'removecom'){
+	if (!($auth->logged())){
+	header('Location: index.php?p=home');
+}
+
+$item = $_POST['item'];
+
+$data = Data::getDb()->prepare("SELECT * FROM comment WHERE id = ?", [$item], null, true);
+$user = Data::getDb()->prepare("SELECT img.userid FROM img WHERE id = ?", [$data->imgid], null, true);
+if ($data->userid === $_SESSION['auth']['id'] || $user->userid === $_SESSION['auth']['id']){
+	//dell comment
+	Data::getDb()->insert("DELETE FROM `comment` WHERE `comment`.`id` =  ?", [$item]);
+	echo "Done";
+}
+else
+	echo "Error";
 }
 else if ($p === 'loader'){
 		if (isset($_GET['off'])){

@@ -94,6 +94,29 @@ function scrollh(){
       };
     }
 
+    function removecom(id) {
+      if (confirm("Are you sure ?")){
+
+          $.ajax({
+            url : "ctrl.php?p=removecom",
+            type : "POST",
+            data: 'item=' + id,
+            dataType : 'html',
+            success: function(html){
+              if (html){
+                alert(html);
+              }else {
+                alert(html);
+              };
+              $('#' + id + 'com').fadeOut("normal", function() {
+             $(this).remove();});
+            }
+          });
+      }else{
+        alert('operation canceled');
+      };
+    }
+
     function likes(id) {
       $.ajax({
         url : "ctrl.php?p=likes",
