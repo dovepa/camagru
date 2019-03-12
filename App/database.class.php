@@ -13,7 +13,7 @@ class Database{
 
 	public function __construct()
 	{
-		include "config/database.php";
+		include $_SERVER['DOCUMENT_ROOT']."/config/database.php";
 
 		$this->DB_DNS = $DB_DNS;
 		$this->DB_USER = $DB_USER;

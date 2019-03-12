@@ -16,7 +16,13 @@ class Landc{
 	public function getLikes()
 	{
 		$data = Data::getDb()->prepare("SELECT * FROM `like` WHERE `imgid` = ? AND `likeval` = 1", [$this->imgid]);
-		$html = count($data).' likes';
+		if (count($data) > 1)
+		{
+			$plu = 's';
+		}else{
+			$plu = '';
+		}
+		$html = count($data).' like'.$plu;
 		$data2 = Data::getDb()->prepare("SELECT * FROM `like` WHERE `imgid` = ? AND `userid` = ?", [$this->imgid, $_SESSION['auth']['id']], null, true);
 		if ($data2->likeval === 1){
 			$like = 'full';
@@ -29,7 +35,13 @@ class Landc{
 	public function getLikesnl()
 	{
 		$data = Data::getDb()->prepare("SELECT * FROM `like` WHERE `imgid` = ? AND `likeval` = 1", [$this->imgid]);
-		$html = count($data).' likes';
+		if (count($data) > 1)
+		{
+			$plu = 's';
+		}else{
+			$plu = '';
+		}
+		$html = count($data).' like'.$plu;
 		return '<div id="'.$this->imgid.'likes" class="'.$this->imgid.'likes"><p class="p">'.$html.' <a href="index.php?p=login"><img src="pages/css/img/emptyheart.png" class="heart"></a></div>';
 	}
 
@@ -67,6 +79,9 @@ class Landc{
 			$user = Data::getDb()->prepare("SELECT img.userid FROM img WHERE id = ?", [$val->imgid], null, true);
 			if ($val->userid === $_SESSION['auth']['id'] || $user->userid === $_SESSION['auth']['id']){
 				$remove = '<button id="'. $val->id . '" class="submit_fields" onclick="removecom(this.id); return false"">Remove</button>';
+			}
+			else {
+				$remove = "";
 			}
 			echo '<div class="com" id="'.$val->id.'com"><p>N'.$i.'- Posted by : <a href="index.php?p=gal&id='. $val->userid . '">' . $val->username . '</a></p>
 			<p>'.$val->comment.'</p><p>'.$remove.'</p></div>';

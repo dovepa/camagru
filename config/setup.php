@@ -41,7 +41,6 @@ try {
           `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
           `userid` INT(11) NOT NULL,
           `linkimg` VARCHAR(100) NOT NULL,
-          `desc` VARCHAR(255) NOT NULL,
           `ts` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userid) REFERENCES users(id)
         )";

@@ -6,12 +6,10 @@
 	} ?>
 <meta charset="UTF-8">
 	<title>Camagru</title>
-	<link rel="stylesheet" href="../pages/css/style.css">
+	<link rel="stylesheet" href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/pages/css/style.css">
+	<script src="<?php $_SERVER['DOCUMENT_ROOT'] ?>/pages/js/http.js"></script>
+	<script src="<?php $_SERVER['DOCUMENT_ROOT'] ?>/pages/js/script.js"></script>
 </head>
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-<script src="../pages/js/script.js"></script>
 
 <body>
 
@@ -22,7 +20,7 @@
 echo $content;
 ?>
 
-
+<script>hide();</script>
 <footer>
 </footer>
 </body>

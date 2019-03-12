@@ -57,6 +57,15 @@ class dbAuth{
 			$_SESSION['msg'][] = $name." must use only letter and numbers !";
 			return false;
 		}
+		$data = Data::getDb()->prepare("SELECT comment.comment, comment.userid, comment.imgid
+											FROM comment
+											WHERE  comment.comment = ?
+											AND comment.userid = ?
+											AND comment.imgid = ?", [$com, $_SESSION['auth']['id'],$imgid], null, true);
+		if ($data){
+			$_SESSION['msg'][] = "you already posted this comment.";
+			return false;
+		}
 		Data::getDb()->insert("INSERT INTO `comment` (`id`, `userid`, `imgid`, `comment`) VALUES (NULL, ?, ?, ?);", [$_SESSION['auth']['id'],$imgid,$com]);
 		$user = Data::getDb()->prepare("SELECT users.username, users.mailcom, users.mail, users.id
 											FROM users, img
@@ -67,7 +76,8 @@ class dbAuth{
 		$mailcontent = "Hello ".$user->username."\n,
 						You have a new comment on your photo to see it go to:\n
 						<a href='".$link."'>".$link."</a>";
-		//echo $mailcontent;
+		echo $mailcontent;
+
 		Mail::mail($user->mail,$mailcontent);
 	}
 		return true;
@@ -129,6 +139,7 @@ class dbAuth{
 								for change your password go to :\n
 								<a href='".$link."'>".$link."</a>";
 				echo $mailcontent;
+
 				Mail::mail($user->mail,$mailcontent);
 				return $_SESSION['msg'][] = "Check your mail";
 			}
@@ -236,7 +247,9 @@ class dbAuth{
 								$mailcontent = "Hello ".$user->username."\n,
 												for activate your account go to :\n
 												<a href='".$link."'>".$link."</a>";
-								echo $mailcontent;
+
+												echo $mailcontent;
+
 								Mail::mail($user->mail, $mailcontent);
 								return true;
 							}

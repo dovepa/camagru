@@ -1,5 +1,5 @@
 <?php
-require "App/autoloader.class.php";
+require $_SERVER['DOCUMENT_ROOT']."/App/autoloader.class.php";
 	App\Autoloader::register();
 
 if(session_status() == PHP_SESSION_NONE){
@@ -30,17 +30,17 @@ else
 		exit;
 	}
 	else {
-	 require "pages/home.php";
+	 require $_SERVER['DOCUMENT_ROOT']."/pages/home.php";
 	}
  }
  else if ($p === 'login')
  {
  if ($auth->logged()){
-	require "pages/home.php";
+	require $_SERVER['DOCUMENT_ROOT']."/pages/home.php";
 	$_SESSION['msg'][] = 'You are already logged';
 }
 else {
-	require "pages/login.php";
+	require $_SERVER['DOCUMENT_ROOT']."/pages/login.php";
 }
  }
  else if ($p === 'logout')
@@ -60,39 +60,39 @@ else {
  else if ($p === 'registration')
  {
 	if ($auth->logged()){
-		require "pages/home.php";
+		require $_SERVER['DOCUMENT_ROOT']."/pages/home.php";
 		$_SESSION['msg'][] = 'You are already logged';
 	}
 	else {
-	 require "pages/registration.php";
+	 require $_SERVER['DOCUMENT_ROOT']."/pages/registration.php";
 	}
  }
  else if ($p === 'faccount')
  {
 	if ($auth->logged()){
-		require "pages/home.php";
+		require $_SERVER['DOCUMENT_ROOT']."/pages/home.php";
 		$_SESSION['msg'][] = 'You are already logged';
 	}
 	else {
-	 require "pages/faccount.php";
+	 require $_SERVER['DOCUMENT_ROOT']."/pages/faccount.php";
 	}
  }
  else if ($p === 'gal')
  {
 	if (!($auth->logged())){
 		if (!empty($_GET['img']))
-			require "pages/nlimg.php";
+			require $_SERVER['DOCUMENT_ROOT']."/pages/nlimg.php";
 		else
-			require "pages/login.php";
+			require $_SERVER['DOCUMENT_ROOT']."/pages/login.php";
 	}
 	else {
 	 if (!empty($_GET['img']))
-		require "pages/img.php";
+		require $_SERVER['DOCUMENT_ROOT']."/pages/img.php";
 	 else if (!empty($_GET['id']))
-		 require "pages/gal.php";
+		 require $_SERVER['DOCUMENT_ROOT']."/pages/gal.php";
 	 else {
 		$_GET['id'] = $auth->logged();
-		require "pages/gal.php";
+		require $_SERVER['DOCUMENT_ROOT']."/pages/gal.php";
 	 }
 
 	}
@@ -105,7 +105,7 @@ else if ($p === 'setting')
 	exit;
    }
    else {
-	   require "pages/setting.php";
+	   require $_SERVER['DOCUMENT_ROOT']."/pages/setting.php";
 	}
 }
 else if ($p === 'vmail')
@@ -131,26 +131,34 @@ else if ($p === 'cpass')
 {
    if ($auth->logged()){
 	   $_SESSION['msg'][] = 'Log out first !';
-	   require "pages/home.php";
+	   require $_SERVER['DOCUMENT_ROOT']."/pages/home.php";
 
    }
    else {
-	   require "pages/cpass.php";
+	   require $_SERVER['DOCUMENT_ROOT']."/pages/cpass.php";
+	}
+}else if ($p === 'add')
+{
+	if (!($auth->logged())){
+		require $_SERVER['DOCUMENT_ROOT']."/pages/login.php";
+	}
+	else {
+	   require $_SERVER['DOCUMENT_ROOT']."/pages/add.php";
 	}
 }
 else{
 	if (!($auth->logged())){
-		require "pages/login.php";
+		require $_SERVER['DOCUMENT_ROOT']."/pages/login.php";
 	}
 	else {
-	 require "pages/home.php";
+	 require $_SERVER['DOCUMENT_ROOT']."/pages/home.php";
 	}
  }
 
 
 
  $content = ob_get_clean();
- require "pages/default.php";
+ require $_SERVER['DOCUMENT_ROOT']."/pages/default.php";
 
 
 

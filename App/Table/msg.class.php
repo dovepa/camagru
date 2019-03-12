@@ -11,7 +11,7 @@ class Msg{
    		 {
         foreach($_SESSION['msg'] as $value)
         {
-            echo '<div class="hide"><p >'.$value.' <a href="#"> -Close- </a></p></div>';
+            echo '<div id="hide" class="hide" ><p >'.$value.' <button class="button" id="close">Close</button></p></div>';
 		}
         unset($_SESSION['msg']);
 		}

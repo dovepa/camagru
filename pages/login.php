@@ -19,8 +19,9 @@
 	App\Table\Msg::msg();
 ?>
 
+<script>scroll();</script>
 <div class="logindiv">
-	<img src="pages/css/img/logo.png" class="logoimg">
+	<img src="<?php $_SERVER['DOCUMENT_ROOT'] ?>/pages/css/img/logo.png" class="logoimg">
 	<div class="linediv"></div><h3> Login </h3><div class="linediv"></div>
 	<?php
 			$form1 = new Form();
@@ -37,7 +38,7 @@
 </div>
 
 <h1>FEED.</h1>
-<div class="post">
+<div id="post">
 
 <?php
 $i = 0;
@@ -51,7 +52,6 @@ if (($i % 4) == 0)
 
 }
 ?>
-</div><script>scroll();</script>
-
+</div>
 <div ><h2>The END...</h2></br></div>
 

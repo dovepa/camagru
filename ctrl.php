@@ -7,7 +7,7 @@ $p = $_GET['p'];
 if(session_status() == PHP_SESSION_NONE){
 	session_start();
 }
-require "App/autoloader.class.php";
+require $_SERVER['DOCUMENT_ROOT']."/App/autoloader.class.php";
 App\Autoloader::register();
 $auth = new App\Auth\dbAuth(App\Data::getDb());
 

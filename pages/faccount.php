@@ -11,7 +11,7 @@
 ?>
 
 <div class="logindiv">
-	<img src="pages/css/img/logo.png" class="logoimg">
+	<img src="<?php $_SERVER['DOCUMENT_ROOT'] ?>/pages/css/img/logo.png" class="logoimg">
 	<div class="linediv"></div><h3> Forgot Password </h3><div class="linediv"></div>
 	<?php
 			$form1 = new Form();
