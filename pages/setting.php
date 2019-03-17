@@ -43,8 +43,3 @@ App\Table\Msg::msg();
 	?>
 </div>
 </div>
-<div class="menuitem">
-<div class="menu">
-<?php App\HTML\Menu::menu(); ?>
-</div>
-</div>

@@ -8,7 +8,7 @@ var getHttpRequest = function () {
 	if (window.XMLHttpRequest) { // Mozilla, Safari,...
 	  httpRequest = new XMLHttpRequest();
 	  if (httpRequest.overrideMimeType) {
-		httpRequest.overrideMimeType('text/xml');
+		httpRequest.overrideMimeType('html');
 	  }
 	}
 	else if (window.ActiveXObject) { // IE

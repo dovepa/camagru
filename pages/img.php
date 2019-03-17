@@ -1,9 +1,3 @@
-<script>
-window.onscroll = function() {
-	menu();
-	}
-</script>
-
 <?php
 if ($_POST['submit'] === 'Submit'){
 	if (!empty($_POST['Comment'])){
@@ -35,8 +29,3 @@ $alandc->postCom();
 $alandc->getCom();
 ?>
 </div></div>
-<div class="menuitem">
-<div class="menu" id="menu">
-<?php App\HTML\Menu::menu(); ?>
-</div>
-</div>

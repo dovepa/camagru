@@ -12,7 +12,7 @@
 </head>
 
 <body>
-
+<?php App\HTML\Menu::menu(); ?>
 
 <div class="footer"><p class="pfooter">Made By @Dpalombo With ❤️</p></div>
 

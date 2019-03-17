@@ -51,6 +51,17 @@ class dbAuth{
 		return (true);
 	}
 
+	public function addimgtodata($id, $final, $desc){
+		Data::getDb()->insert("INSERT INTO `img` (`id`, `userid`, `linkimg`, `desc`) VALUES (NULL, ?, ?, ?);", [$id,$final,$desc]);
+		$data = Data::getDb()->prepare("SELECT * FROM img WHERE img.linkimg = ?", [$final], null, true);
+		if ($data){
+			header('Location: index.php?p=gal&id='.$id.'&img='.$data->id);
+			exit;
+		}else{
+			return false;
+		}
+	}
+
 	public function comment($com, $imgid){
 		if (!preg_match('/^[a-zA-Z0-9 .\/*-+@]+$/', $com))
 		{
@@ -81,7 +92,7 @@ class dbAuth{
 		Mail::mail($user->mail,$mailcontent);
 	}
 		return true;
-	}
+}
 
 	public function vmail($id, $token){
 		$user = Data::getDb()->prepare("SELECT * FROM users WHERE id = ? AND token = ?", [$id, $token], null, true);
@@ -149,74 +160,6 @@ class dbAuth{
 
 	}
 
-	public function setting($nusername, $nmail, $oldpasswd, $npasswd, $npasswdc, $switch){
-		if ($nusername)
-		{
-			$nusername = ucfirst(strtolower($nusername));
-			$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$nusername], null, true);
-			if ($user){
-				return $_SESSION['msg'][] = "Username exist, choose another";
-			}
-			else if (($this->checkInput($nusername, 'Username') === false)){
-				return;
-			}
-			else{
-				Data::getDb()->insert("UPDATE `users` SET `username` = ?
-				WHERE `users`.`id` = ?;", [$nusername, $_SESSION['auth']['id']]);
-				$_SESSION['msg'][] = "Username changed";
-				$_SESSION['auth']['username'] = $nusername;
-				return;
-			}
-		}
-		if ($nmail){
-			if (filter_var($nmail, FILTER_VALIDATE_EMAIL)){
-				$cmail = Data::getDb()->prepare("SELECT * FROM users WHERE mail = ?", [$mail], null, true);
-				if ($cmail){
-					return $_SESSION['msg'][] = "Mail exist";
-				}
-				else{
-					Data::getDb()->insert("UPDATE `users` SET `mail` = ?
-					WHERE `users`.`id` = ?;",[$nmail, $_SESSION['auth']['id']]);
-					$_SESSION['msg'][] = "Mail changed";
-				}
-			}else{
-				return $_SESSION['msg'][] = "Bad Mail format";
-			}
-		}
-		if ($switch !== $_SESSION['auth']['mailcom']){
-				Data::getDb()->insert("UPDATE `users` SET `mailcom` = ?
-				 WHERE `users`.`id` = ?;", [$switch, $_SESSION['auth']['id']]);
-				 $_SESSION['auth']['mailcom'] = $switch;
-				 $_SESSION['msg'][] = "Comments Mail set";
-		}
-		if ($oldpasswd || $npasswd || $npasswdc){
-			if ($oldpasswd && $npasswd && $npasswdc){
-				if (($npasswd != $npasswdc) || ($this->checkPassword($npasswd) === false)){
-					return $_SESSION['msg'][] = "Password are not same";
-				}
-				$oldpasswd = hash('whirlpool', $oldpasswd);
-				$pass = Data::getDb()->prepare("SELECT passwd FROM users WHERE id = ?", [$_SESSION['auth']['id']], null, true);
-				if ($pass->passwd === $oldpasswd){
-					$npasswd = hash('whirlpool', $npasswd);
-					if ($pass->passwd === $npasswd){
-						return $_SESSION['msg'][] = "New Password = Old Password...";
-					}
-					else{
-						Data::getDb()->insert("UPDATE `users` SET `passwd` =  ?
-						 WHERE `users`.`id` = ?;", [$npasswd, $_SESSION['auth']['id']]);
-						 return $_SESSION['msg'][] = "Password changed";
-					}
-				}
-				else{
-					return $_SESSION['msg'][] = "Bad old password";
-				}
-			}else{
-				return $_SESSION['msg'][] = "Password error";
-			}
-		}
-
-}
-
 	public function regist($username, $mail, $p1, $p2){
 		if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
 			if ($p1 === $p2){
@@ -281,6 +224,16 @@ class dbAuth{
 					$_SESSION['auth']['id'] = $user->id;
 					$_SESSION['auth']['username'] = $user->username;
 					$_SESSION['auth']['mailcom'] = $user->mailcom;
+					$lst = scandir("img");
+					foreach ($lst as $val){
+					if (preg_match('/^'.$_SESSION['auth']['id'].'tmp-.*$/', $val))
+						{
+							if (file_exists("img/".$val))
+							{
+								unlink("img/".$val);
+							}
+						}
+					}
 					return true;
 				}
 			}else{
@@ -293,6 +246,92 @@ class dbAuth{
 
 	public function logged(){
 		return isset($_SESSION['auth']['id']);
+	}
+
+	//////////////////////////////////////////////// SETTING /////////////////////////////////
+	private function setusername($nusername){
+		if ($nusername)
+		{
+			$nusername = ucfirst(strtolower($nusername));
+			$user = Data::getDb()->prepare("SELECT * FROM users WHERE username = ?", [$nusername], null, true);
+			if ($user){
+				return $_SESSION['msg'][] = "Username exist, choose another";
+			}
+			else if (($this->checkInput($nusername, 'Username') === false)){
+				return;
+			}
+			else{
+				Data::getDb()->insert("UPDATE `users` SET `username` = ?
+				WHERE `users`.`id` = ?;", [$nusername, $_SESSION['auth']['id']]);
+				$_SESSION['msg'][] = "Username changed";
+				$_SESSION['auth']['username'] = $nusername;
+				return;
+			}
+		}
+	}
+
+	private function setmail($nmail){
+		if ($nmail){
+			if (filter_var($nmail, FILTER_VALIDATE_EMAIL)){
+				$cmail = Data::getDb()->prepare("SELECT * FROM users WHERE mail = ?", [$mail], null, true);
+				if ($cmail){
+					return $_SESSION['msg'][] = "Mail exist";
+				}
+				else{
+					Data::getDb()->insert("UPDATE `users` SET `mail` = ?
+					WHERE `users`.`id` = ?;",[$nmail, $_SESSION['auth']['id']]);
+					$_SESSION['msg'][] = "Mail changed";
+				}
+			}else{
+				return $_SESSION['msg'][] = "Bad Mail format";
+			}
+		}
+	}
+
+	private function setpass($oldpasswd, $npasswd, $npasswdc){
+		if ($oldpasswd || $npasswd || $npasswdc){
+			if ($oldpasswd && $npasswd && $npasswdc){
+				if (($npasswd != $npasswdc) || ($this->checkPassword($npasswd) === false)){
+					return $_SESSION['msg'][] = "Password are not same";
+				}
+				$oldpasswd = hash('whirlpool', $oldpasswd);
+				$pass = Data::getDb()->prepare("SELECT passwd FROM users WHERE id = ?", [$_SESSION['auth']['id']], null, true);
+				if ($pass->passwd === $oldpasswd){
+					$npasswd = hash('whirlpool', $npasswd);
+					if ($pass->passwd === $npasswd){
+						return $_SESSION['msg'][] = "New Password = Old Password...";
+					}
+					else{
+						Data::getDb()->insert("UPDATE `users` SET `passwd` =  ?
+						 WHERE `users`.`id` = ?;", [$npasswd, $_SESSION['auth']['id']]);
+						 return $_SESSION['msg'][] = "Password changed";
+					}
+				}
+				else{
+					return $_SESSION['msg'][] = "Bad old password";
+				}
+			}else{
+				return $_SESSION['msg'][] = "Password error";
+			}
+		}
+	}
+
+	private function setswitch($switch){
+		if ($switch !== $_SESSION['auth']['mailcom']){
+			Data::getDb()->insert("UPDATE `users` SET `mailcom` = ?
+			 WHERE `users`.`id` = ?;", [$switch, $_SESSION['auth']['id']]);
+			 $_SESSION['auth']['mailcom'] = $switch;
+			 $_SESSION['msg'][] = "Comments Mail set";
+	}
+	}
+
+	public function setting($nusername, $nmail, $oldpasswd, $npasswd, $npasswdc, $switch){
+		$this->setusername($nusername);
+		$this->setmail($nmail);
+		$this->setpass($oldpasswd, $npasswd, $npasswdc);
+		$this->setswitch($switch);
+		$_SESSION['msg'][] = "Done";
+		return;
 	}
 
 }

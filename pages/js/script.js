@@ -75,7 +75,8 @@ window.onscroll = function(){
 };
 
 function scrollh(){
-    function getDistFromBottom () {
+  var offset = 10
+      function getDistFromBottom () {
 
       var scrollPosition = window.pageYOffset;
       var windowSize     = window.innerHeight;
@@ -85,6 +86,8 @@ function scrollh(){
 
     }
     var dist = getDistFromBottom ()
+    window.onscroll = function(){
+
       dist = getDistFromBottom ()
       var act = true
       if (dist === 0 && act === true){
@@ -109,12 +112,13 @@ function scrollh(){
                 // Le serveur a renvoyé un status d'erreur
             }
         }
-
+      }
       }
     }
 };
 
 function scrollgal(id){
+  var offset = 10
   function getDistFromBottom () {
 
     var scrollPosition = window.pageYOffset;
@@ -125,6 +129,7 @@ function scrollgal(id){
 
   }
   var dist = getDistFromBottom ()
+  window.onscroll = function(){
     dist = getDistFromBottom ()
     var act = true
     if (dist === 0 && act === true){
@@ -149,7 +154,7 @@ function scrollgal(id){
               // Le serveur a renvoyé un status d'erreur
           }
       }
-
+    }
     }
   }
 };

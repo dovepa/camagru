@@ -1,11 +1,12 @@
 @import '_mixins.scss';
 @import '_colors.scss';
 @import 'toggle.scss';
+
 body{
 	background-color: $body_color;
 	margin: 0;
 	padding: 0;
-	min-width: 500px;
+	min-width: 900px;
 }
 
 %boxshadow{
@@ -15,6 +16,52 @@ body{
 %centerdiv{
 	margin-right: auto;
 	margin-left: auto;
+}
+
+.test{
+	width: 100%;
+	height: auto;
+	position: relative;
+}
+
+#video{
+	width: 100%;
+	height: auto;
+	z-index: 20;
+	top: 0;
+	left: 0;
+	position: relative;
+}
+
+#canvas{
+	width: 100%;
+	height: auto;
+	z-index: 20;
+	top: 0;
+	left: 0;
+	position: relative;
+}
+
+.imgtest{
+	position: relative;
+	width: 100%;
+	height: auto;
+	z-index: 20;
+	top: 0;
+	left: 0;
+}
+
+.overdiv{
+	position: absolute;
+	width: 100%;
+	height: auto;
+	z-index: 21;
+	top: 0;
+	left: 0;
+}
+
+.down{
+	position: relative;
 }
 
 .heart{
@@ -79,6 +126,10 @@ body{
 	margin: 1em;
 }
 
+.descdiv{
+	word-break:break-all;
+}
+
 .com{
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -118,60 +169,37 @@ body{
  	 flex : 5;
 }
 
-.menuitem {
-	margin: 1em;
-	padding: 0.5em;
-	width: 110px;
-	min-width: 0;
-	color: white;
-	font-family: monospace;
- 	flex : auto;
-}
-
-.menu {
-	height: auto;
-	transition: all 0.5s ease 0s;
-	-moz-transition: all 0.5s ease 0s;
-	-webkit-transition: all 0.5s ease 0s;
-	-o-transition: all 0.5s ease 0s;
-	z-index: 26;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	border : 5px;
-	border-color: white;
-	border-style: $instaon;
-
-  }
-  ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+.topnav {
+	background-color: $instaon;
 	overflow: hidden;
-	margin: 25px;
+	z-index: 26;
+	position: sticky;
+	top: 0px;
   }
 
-  li {
+  .topnav a {
 	float: left;
-  }
-
-  li a {
-	display: block;
 	color: white;
 	text-align: center;
-	padding: 16px;
-	background-color: $backcolormenu;
+	padding: 14px 16px;
 	text-decoration: none;
+	font-size: 17px;
   }
 
-  li a:hover {
-	background-color: $instaok;
+  .topnav a:hover {
+	background-color: $backsubmit;
+	color: white;
   }
 
+  .topnav a.active {
+	background-color: $instablue;
+	color: white;
+  }
 
 .img{
 	width : auto;
 	height: auto;
+	z-index: 20;
 	max-width: 100%;
 	max-height: 100%;
 }
@@ -281,6 +309,10 @@ a {
 h1{
 	@extend p;
 	text-align: center;
+}
+
+a:link{
+	text-decoration: none;
 }
 
 h2{

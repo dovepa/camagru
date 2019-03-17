@@ -145,6 +145,22 @@ else if ($p === 'cpass')
 	else {
 	   require $_SERVER['DOCUMENT_ROOT']."/pages/add.php";
 	}
+}else if ($p === 'webcam')
+{
+	if (!($auth->logged())){
+		require $_SERVER['DOCUMENT_ROOT']."/pages/login.php";
+	}
+	else {
+	   require $_SERVER['DOCUMENT_ROOT']."/pages/webcam.php";
+	}
+}else if ($p === 'import')
+{
+	if (!($auth->logged())){
+		require $_SERVER['DOCUMENT_ROOT']."/pages/login.php";
+	}
+	else {
+	   require $_SERVER['DOCUMENT_ROOT']."/pages/import.php";
+	}
 }
 else{
 	if (!($auth->logged())){

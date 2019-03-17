@@ -1,10 +1,6 @@
 <script>
-var offset = 10
 var id="<?php echo $_GET['id']; ?>";
-window.onscroll = function() {
 	scrollgal(id);
-	menu();
-	}
 </script>
 
 <?php
@@ -24,12 +20,7 @@ foreach (App\Table\Img::getGal(0,$_GET['id']) as $img): ?>
 <?php endforeach; ?>
 <?php
 if ($i === 0)
-	echo '<h1>Your Gallery Is empty</h1>';?>
+	echo '<h1>Gallery Is empty</h1>';?>
 </div>
 
-<div class="menuitem">
-<div class="menu" id="menu">
-<?php App\HTML\Menu::menu(); ?>
-</div>
-</div>
 </div>

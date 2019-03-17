@@ -1,9 +1,5 @@
 <script>
-var offset = 10
-window.onscroll = function() {
 	scrollh();
-	menu();
-	}
 </script>
 
 <?php
@@ -18,9 +14,4 @@ App\Table\Msg::msg();
 		?>
 	</div>
 
-	<div class="menuitem">
-		<div class="menu" id="menu">
-		<?php App\HTML\Menu::menu(); ?>
-		</div>
-		</div>
 </div>

@@ -30,7 +30,7 @@ class Img{
 
 	public static function getImgpage()
 	{
-		$data = Data::getDb()->prepare("SELECT img.id, img.userid, img.linkimg, img.ts, users.username
+		$data = Data::getDb()->prepare("SELECT img.id, img.userid, img.linkimg, img.desc, img.ts, users.username
 									FROM img, users
 									WHERE img.userid = users.id
 									AND img.id = ?", [$_GET['img']], __CLASS__, true);
@@ -66,6 +66,7 @@ class Img{
 		$html .= '<p class="p">'. date_format($date, 'd/m/Y H:i').'  Posted by : <a href="index.php?p=gal&id='. $this->userid . '">' . $this->username . '</a> </p>';
 		$landc = new Landc($this->id);
 		$html .=  $landc->getLikes();
+		$html .= '<p class="descdiv">'. $this->desc. '</p>';
 		return $html;
 	}
 
@@ -76,6 +77,7 @@ class Img{
 		$html .= '<p class="p">'. date_format($date, 'd/m/Y H:i').'  Posted by : <a href="index.php?p=gal&id='. $this->userid . '">' . $this->username . '</a> </p>';
 		$landc = new Landc($this->id);
 		$html .=  $landc->getLikesnl();
+		$html .= '<p class="descdiv">'. $this->desc. '</p>';
 		$html .= '<p class="p">Log in for comment and like !!!</p>';
 
 		return $html;

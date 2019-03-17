@@ -4,8 +4,6 @@
 	$auth->faccount($_POST['Username']);
  };
 
-
-
 	use \App\HTML\Form;
 	App\Table\Msg::msg();
 ?>

@@ -42,6 +42,7 @@ try {
           `userid` INT(11) NOT NULL,
           `linkimg` VARCHAR(100) NOT NULL,
           `ts` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          `desc` VARCHAR(255) NOT NULL,
           FOREIGN KEY (userid) REFERENCES users(id)
         )";
         $db->exec($sql);
@@ -97,14 +98,14 @@ try {
         echo "Error comment table :".$e->getMessage()."\n";
     }
 
-    try {
+ /*    try {
         $db = new PDO($DB_DNS, $DB_USER, $DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `users` (`id`, `username`, `mail`, `passwd`, `token`, `verified`) VALUES
+       $sql = "INSERT INTO `users` (`id`, `username`, `mail`, `passwd`, `token`, `verified`) VALUES
         ('1', 'dove', 'test@dfd.fr', '123456', '111', '1')";
         $db->exec($sql);
     } catch (PDOException $e) {
         echo "Error user table creation :".$e->getMessage()."\n";
     }
-
+*/
 ?>

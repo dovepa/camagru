@@ -16,8 +16,3 @@ $alandc->share();
 $alandc->getCom();
 ?>
 </div></div>
-<div class="menuitem">
-<div class="menu">
-<?php App\HTML\Menu::menunl(); ?>
-</div>
-</div>

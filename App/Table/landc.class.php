@@ -29,7 +29,7 @@ class Landc{
 		}else{
 			$like = 'empty';
 		}
-		return '<div id="'.$this->imgid.'likes" class="'.$this->imgid.'likes"><p class="p">'.$html.' <a href="#" id="'.$this->imgid.'" onclick="likes(this.id); return false"><img src="pages/css/img/'.$like.'heart.png" class="heart"></a></div>';
+		return '<div id="'.$this->imgid.'likes" class="'.$this->imgid.'likes"><p>'.$html.' <a href="#" id="'.$this->imgid.'" onclick="likes(this.id); return false"><img src="pages/css/img/'.$like.'heart.png" class="heart"/></a></p></div>';
 	}
 
 	public function getLikesnl()
@@ -42,7 +42,7 @@ class Landc{
 			$plu = '';
 		}
 		$html = count($data).' like'.$plu;
-		return '<div id="'.$this->imgid.'likes" class="'.$this->imgid.'likes"><p class="p">'.$html.' <a href="index.php?p=login"><img src="pages/css/img/emptyheart.png" class="heart"></a></div>';
+		return '<div id="'.$this->imgid.'likes" class="'.$this->imgid.'likes"><p>'.$html.' <a href="index.php?p=login"><img src="pages/css/img/emptyheart.png" class="heart"/></a></p></div>';
 	}
 
 	public function postCom()

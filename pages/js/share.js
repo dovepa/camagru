@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////
+//                  Social Share
+//////////////////////////////////////////////////////////////
+
 var popupCenter = function(url, title, width, height){
 	var popupWidth = width || 640;
 	var popupHeight = height || 320;
@@ -17,12 +21,12 @@ document.querySelector('.twitter').addEventListener('click', function(e){
 	var url = this.getAttribute('data-url');
 	var shareUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(document.title) +
 		"&url=" + encodeURIComponent(url);
-	popupCenter(shareUrl, "Partager sur Twitter");
+	popupCenter(shareUrl, "Share on Twitter");
 });
 
 document.querySelector('.facebook').addEventListener('click', function(e){
 	e.preventDefault();
 	var url = this.getAttribute('data-url');
 	var shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
-	popupCenter(shareUrl, "Partager sur facebook");
+	popupCenter(shareUrl, "Share on facebook");
 });

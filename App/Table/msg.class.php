@@ -9,10 +9,12 @@ class Msg{
 		}
    		if($_SESSION['msg'] != NULL)
    		 {
-        foreach($_SESSION['msg'] as $value)
-        {
-            echo '<div id="hide" class="hide" ><p >'.$value.' <button class="button" id="close">Close</button></p></div>';
-		}
+			echo '<div id="hide" class="hide" >';
+			foreach($_SESSION['msg'] as $value)
+			{
+				echo '<p >'.$value.'</p>';
+			}
+			echo '<button class="button" id="close">Close</button></p></div>';
         unset($_SESSION['msg']);
 		}
 	}
