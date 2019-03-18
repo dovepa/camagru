@@ -36,22 +36,19 @@ if ($_POST['submit'] === 'submit'){
 	imagecopy($img, $logo, 0, 0, 0, 0, 1920, 1080);
 	$success = imagejpeg($img, $final, 100);
 	imagedestroy($img);
-
+	delltmp();
 	 if ($success === true) {
 		$auth = new App\Auth\dbAuth(App\Data::getDb());// return false si error
 		if ($auth->addimgtodata($_SESSION['auth']['id'],$final,$desc) === false)
 		{
 			header('Location: index.php?p=home');
 			$_SESSION['msg'][] = "Error";
-			delltmp();
 			exit;
 		}
-		delltmp();
 	 }
 	else{
 		header('Location: index.php?p=home');
 			$_SESSION['msg'][] = "Error";
-			delltmp();
 			exit;
 	}
 }
