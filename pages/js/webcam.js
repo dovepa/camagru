@@ -64,8 +64,6 @@
 			navigator.oGetUserMedia);
 
 
-
-
 	navigator.mediaDevices.getUserMedia(
 	  {
 		video: true,
@@ -75,8 +73,9 @@
 		if (navigator.mozGetUserMedia) {
 		  video.mozSrcObject = stream;
 		} else {
-		  var vendorURL = window.URL || window.webkitURL;
-		  video.src = vendorURL.createObjectURL(stream);
+	//		var vendorURL = window.URL || window.webkitURL;
+	//		video.src = vendorURL.createObjectURL(stream);
+			video.srcObject = (stream)
 		}
 		video.play();
 		if (stream)
@@ -88,6 +87,7 @@
 			notcam.style.display = 'block';
 		}
 	  });
+
 
 	video.addEventListener('canplay', function(ev){
 	  if (!streaming) {

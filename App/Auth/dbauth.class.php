@@ -55,7 +55,7 @@ class dbAuth{
 		Data::getDb()->insert("INSERT INTO `img` (`id`, `userid`, `linkimg`, `desc`) VALUES (NULL, ?, ?, ?);", [$id,$final,$desc]);
 		$data = Data::getDb()->prepare("SELECT * FROM img WHERE img.linkimg = ?", [$final], null, true);
 		if ($data){
-			header('Location: index.php?p=gal&id='.$id.'&img='.$data->id);
+			header('Location: index.php?p=webcam');
 			exit;
 		}else{
 			return false;
