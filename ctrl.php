@@ -24,7 +24,7 @@ if ($p === 'remove'){
 												WHERE img.userid = users.id
 												AND img.id = ?", [$item], null, true);
 			if (file_exists($data->linkimg))
-				unlik($data->linkimg);
+				unlink($data->linkimg);
 			if ($data->userid === $_SESSION['auth']['id']){
 				//dell all comment
 				Data::getDb()->insert("DELETE FROM `comment` WHERE imgid = ?", [$item]);
