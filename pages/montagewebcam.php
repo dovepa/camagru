@@ -33,7 +33,7 @@ if ($_POST['submit'] === 'submit'){
 	$img = imagecreatefromfile($tmp);
 
 	//imagesx($logo)
-	imagecopy($img, $logo, 0, 0, 0, 0, 1920, 1080);
+	imagecopy($img, $logo, 0, 0, 0, 0, 1920, 1440);
 	$success = imagejpeg($img, $final, 100);
 	imagedestroy($img);
 	delltmp();

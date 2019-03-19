@@ -17,7 +17,7 @@ App\Table\Msg::msg();
 				echo '	<div class="imglist">
 				<h2>Choose a photo</h2>
 				<form name="upload" method="post" action="" enctype="multipart/form-data">
-					<label for="icone">File (JPG Format 1920w * 1080h, Max 20 Mo Respect That !) :</label>
+					<label for="icone">File (JPG Format 1920w * 1440h, Max 20 Mo Respect That !) :</label>
 					<input type="file" name="myfile" id="myfile"><br>
 					<input class="submit_fields" type="submit" name="submit" value="Upload" />
 				</form>

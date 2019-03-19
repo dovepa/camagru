@@ -9,22 +9,22 @@ if ($_GET['op'] === 'reset')
 if(!empty($_FILES['myfile']['name']))
 {
 	$fichier_temp = $_FILES['myfile']['tmp_name'];
-	$fichier_nom = $_FILES['myfile']['name'];
-	list($fichier_larg, $fichier_haut, $fichier_type, $fichier_attr) = getimagesize($fichier_temp);
-	$fichier_poids_max = 20000000;
-	$fichier_h_max = 1080;
-	$fichier_l_max = 1920;
-	$fichier_dossier = 'img/';
-	$fichier_ext = substr($fichier_nom,strrpos( $fichier_nom, '.')+1);
+	$filename = $_FILES['myfile']['name'];
+	list($fl, $fh, $fichier_type, $fichier_attr) = getimagesize($fichier_temp);
+	$fsizemax = 20000000;
+	$fhmax = 1440;
+	$flmax = 1920;
+	$pathfile = 'img/';
+	$fichier_ext = substr($filename,strrpos( $filename, '.')+1);
 	if (!empty($fichier_temp) && is_uploaded_file($fichier_temp))
 	{
-	if (filesize($fichier_temp)<$fichier_poids_max)
+	if (filesize($fichier_temp)<$fsizemax)
 	{
 		if ($fichier_type===2)
 		{
-		if (($fichier_larg === $fichier_l_max) && ($fichier_haut === $fichier_h_max))
+		if (($fl === $flmax) && ($fh === $fhmax))
 		{
-			$finalfile = $fichier_dossier.$_SESSION['auth']['id']."tmp-".uniqid().".".$fichier_ext;
+			$finalfile = $pathfile.$_SESSION['auth']['id']."tmp-".uniqid().".".$fichier_ext;
 		if (move_uploaded_file($fichier_temp, $finalfile))
 			{
 				$_SESSION['msg'][] = "file upload success";
@@ -61,7 +61,7 @@ if ($_POST['submit'] === 'submit'){
 	$logo = imagecreatefromfile($filter);
 	$img = imagecreatefromfile($photo);
 
-	imagecopy($img, $logo, 0, 0, 0, 0, 1920, 1080);
+	imagecopy($img, $logo, 0, 0, 0, 0, 1920, 1440);
 	$success = imagejpeg($img, $final, 100);
 	imagedestroy($img);
 	delltmp();
