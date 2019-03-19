@@ -57,37 +57,22 @@
 		height = 1080;
 
 
-	navigator.getMedia = ( navigator.getUserMedia ||
-			navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia ||
-			navigator.oGetUserMedia);
-
-
-	navigator.mediaDevices.getUserMedia(
-	  {
-		video: true,
-		audio: false
-	  })
-	  .then(function(stream) {
-		if (navigator.mozGetUserMedia) {
-		  video.mozSrcObject = stream;
-		} else {
-	//		var vendorURL = window.URL || window.webkitURL;
-	//		video.src = vendorURL.createObjectURL(stream);
-			video.srcObject = (stream)
-		}
-		video.play();
-		if (stream)
-		{
-			yescam.style.display = 'block';
-			notcam.style.display = 'none';
-		}else{
-			yescam.style.display = 'none';
-			notcam.style.display = 'block';
-		}
-	  });
-
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+	// Not adding `{ audio: true }` since we only want video now
+	navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+			//video.src = window.URL.createObjectURL(stream);
+			video.srcObject = stream;
+			video.play();
+			if (stream)
+			{
+				yescam.style.display = 'block';
+				notcam.style.display = 'none';
+			}else{
+				yescam.style.display = 'none';
+				notcam.style.display = 'block';
+			}
+	});
+}
 
 	video.addEventListener('canplay', function(ev){
 	  if (!streaming) {
