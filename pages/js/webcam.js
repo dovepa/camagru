@@ -49,14 +49,14 @@
 
 	var streaming = false,
 		video        = document.querySelector('#video'),
-		cover        = document.querySelector('#cover'),
+	//	cover        = document.querySelector('#cover'),
 		canvas       = document.querySelector('#canvas'),
-		photo        = document.querySelector('#photo'),
+	//	photo        = document.querySelector('#photo'),
 		startbutton  = document.querySelector('#startbutton'),
 		width = 1920,
-		height = 1080;
+		height = 1440;
 
-
+		//var video = document.getElementById('video');
 if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 	// Not adding `{ audio: true }` since we only want video now
 	navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
@@ -92,7 +92,7 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 	  var data = canvas.toDataURL('image/jpg');
 	  imagetake.value = data;
 	  sub.style.display = 'block';
-	  photo.setAttribute('src', data);
+	  //photo.setAttribute('src', data);
 	}
 
 	startbutton.addEventListener('click', function(ev){

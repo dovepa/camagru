@@ -62,7 +62,7 @@ class Landc{
                 Share on TWITTER
 			</button>
 		<button class="share facebook" data-url="'.$actual_link.'">
-			Share in FACEBOOK
+			Share on FACEBOOK
 		</button><script src="../pages/js/share.js"></script>';
 		return;
 	}
