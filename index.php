@@ -52,6 +52,7 @@ else {
 	}
 	else {
 	unset($_SESSION['auth']);
+	session_destroy();
 	header('Location: index.php?p=login');
 	$_SESSION['msg'][] = 'You are not logged yet';
 	exit;

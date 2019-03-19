@@ -87,6 +87,8 @@ class dbAuth{
 		$mailcontent = "Hello ".$user->username."\n,
 						You have a new comment on your photo to see it go to:\n
 						<a href='".$link."'>".$link."</a>";
+		echo $mailcontent;
+		die();
 		Mail::mail($user->mail,$mailcontent);
 	}
 		return true;
@@ -147,6 +149,8 @@ class dbAuth{
 				$mailcontent = "Hello ".$user->username."\n,
 								for change your password go to :\n
 								<a href='".$link."'>".$link."</a>";
+				echo $mailcontent;
+				die();
 				Mail::mail($user->mail,$mailcontent);
 				return $_SESSION['msg'][] = "Check your mail";
 			}
@@ -186,6 +190,8 @@ class dbAuth{
 								$mailcontent = "Hello ".$user->username."\n,
 												for activate your account go to :\n
 												<a href='".$link."'>".$link."</a>";
+								echo $mailcontent;
+								die();
 								Mail::mail($user->mail, $mailcontent);
 								return true;
 							}

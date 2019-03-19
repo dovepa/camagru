@@ -1,4 +1,4 @@
-	var tp = document.getElementById("startbutton");
+var tp = document.getElementById("startbutton");
 	var f1rs = document.getElementById("f1rs");
 	var f2rs = document.getElementById("f2rs");
 	var f3rs = document.getElementById("f3rs");

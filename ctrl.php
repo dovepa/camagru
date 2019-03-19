@@ -14,9 +14,9 @@ $auth = new App\Auth\dbAuth(App\Data::getDb());
 
 if ($p === 'remove'){
 				if (!($auth->logged())){
-				header('Location: index.php?p=home');
-			}
-
+				echo 'Error';
+				}
+			else{
 			$item = $_POST['item'];
 
 			$data = Data::getDb()->prepare("SELECT img.id, img.userid, img.linkimg, img.ts, img.desc, users.username
@@ -36,6 +36,7 @@ if ($p === 'remove'){
 			}
 			else
 				echo "Error";
+		}
 } else if ($p === 'removecom'){
 	if (!isset($_SESSION['auth']['id'])){
 	header('Location: index.php?p=home');
